@@ -1,18 +1,18 @@
 @echo off
 chcp 65001 >nul
-cls
+echo.
 echo ========================================
-echo  STARTING LAUNCHER (DEV MODE)
+echo   START LAUNCHER (DEV MODE)
 echo ========================================
 echo.
 
-cd /d "%~dp0\launcher"
+cd launcher
 
 echo Installing dependencies...
 call npm install
 
 echo.
 echo Starting launcher...
-call npm start -- --dev
+call npm run dev
 
-pause
+cd ..

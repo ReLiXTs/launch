@@ -1,30 +1,16 @@
-# Dependencies
 node_modules/
-
-# Build outputs
 dist/
-*.msi
-*.exe
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# OS
+out/
+build/
+*.log
 .DS_Store
 Thumbs.db
-desktop.ini
-
-# Logs
-*.log
-npm-debug.log*
-
-# Environment
+*.swp
+*.swo
+*~
 .env
 .env.local
-
-# Temp files
-temp-*.zip
-*.tmp
+server-data/
+*.zip
+*.msi
+*.exe

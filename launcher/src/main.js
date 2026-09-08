@@ -15,7 +15,7 @@ function createWindow() {
     height: 600,
     minWidth: 800,
     minHeight: 500,
-    icon: path.join(__dirname, '../assets/icon.ico'),
+    icon: path.join(__dirname, '../assets/icon.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -23,12 +23,11 @@ function createWindow() {
     },
     frame: true,
     resizable: true,
-    title: `${config.serverName} Лаунчер`
+    title: `${config.serverName} Launcher`
   });
 
   mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
   
-  // Открываем DevTools в режиме разработки
   if (process.argv.includes('--dev')) {
     mainWindow.webContents.openDevTools();
   }
@@ -41,11 +40,9 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow();
   
-  // Инициализация систем
   updater = new Updater(config.github);
   minecraftLauncher = new MinecraftLauncher();
 
-  // Проверка обновлений при запуске
   setTimeout(() => {
     checkForUpdates();
   }, 2000);
@@ -63,7 +60,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-// IPC обработчики
 ipcMain.handle('get-config', () => {
   return config;
 });
@@ -110,12 +106,11 @@ async function checkForUpdates() {
     }
     return update;
   } catch (error) {
-    console.error('Ошибка проверки обновлений:', error);
+    console.error('Update check error:', error);
     return { hasUpdate: false, error: error.message };
   }
 }
 
-// Периодическая проверка обновлений
 setInterval(() => {
   checkForUpdates();
 }, config.updateCheckInterval);

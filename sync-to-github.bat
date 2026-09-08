@@ -1,30 +1,36 @@
 @echo off
 chcp 65001 >nul
-cls
+echo.
 echo ========================================
-echo  SYNC TO GITHUB
+echo   SYNC CHANGES TO GITHUB
 echo ========================================
 echo.
 
-cd /d "%~dp0"
+echo Adding all changes...
+git add .
 
-echo Checking Git status...
+echo.
+echo Checking status...
 git status
 
 echo.
-echo [1/3] Adding changes...
-git add .
+set /p msg="Enter commit message (or press Enter for default): "
+if "%msg%"=="" set msg="Sync content - %date% %time%"
 
-echo [2/3] Creating commit...
-set /p message="Enter commit message (or Enter for auto): "
-if "%message%"=="" set message="Update content %date% %time%"
-git commit -m "%message%"
+echo.
+echo Committing...
+git commit -m "%msg%"
 
-echo [3/3] Pushing to GitHub...
+echo.
+echo Pushing...
 git push origin main
 
 echo.
 echo ========================================
-echo  Sync complete!
+echo   SYNC COMPLETE!
 echo ========================================
+echo.
+echo Go to https://github.com/ReLiXTs/launch/actions
+echo to download the new MSI installer.
+echo.
 pause

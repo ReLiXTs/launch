@@ -1,21 +1,23 @@
 {
   "name": "kamyshlauncher",
   "version": "1.0.0",
-  "description": "Лаунчер для сервера Камышечный",
+  "description": "Kamyshechnyy Launcher",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
+    "dev": "electron . --dev",
     "build": "electron-builder",
     "build:win": "electron-builder --win",
     "build:linux": "electron-builder --linux",
-    "build:mac": "electron-builder --mac"
+    "build:mac": "electron-builder --mac",
+    "pack": "electron-builder --dir"
   },
   "keywords": ["minecraft", "launcher", "kamysh"],
   "author": "ReLiXTs",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^28.0.0",
-    "electron-builder": "^24.9.1"
+    "electron": "^32.0.0",
+    "electron-builder": "^25.0.0"
   },
   "dependencies": {
     "node-fetch": "^2.7.0",
@@ -24,7 +26,7 @@
   },
   "build": {
     "appId": "com.kamysh.launcher",
-    "productName": "Камышечный Лаунчер",
+    "productName": "Kamyshechnyy Launcher",
     "directories": {
       "output": "dist"
     },
@@ -39,14 +41,14 @@
           "arch": ["x64"]
         }
       ],
-      "icon": "assets/icon.svg"
+      "icon": "assets/icon.png"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Камышечный Лаунчер"
+      "shortcutName": "Kamyshechnyy Launcher"
     },
     "files": [
       "src/**/*",

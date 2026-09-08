@@ -1,62 +1,63 @@
 @echo off
 chcp 65001 >nul
-cls
+echo.
 echo ========================================
-echo  KAMYSH LAUNCHER - QUICK START
+echo   KAMYSHECHNYY LAUNCHER - MAIN MENU
 echo ========================================
 echo.
-echo Select action:
+echo [1] Push to GitHub
+echo [2] Start Launcher (Dev Mode)
+echo [3] Build MSI Installer
+echo [4] Sync Changes to GitHub
+echo [5] Install Dependencies
+echo [6] Exit
 echo.
-echo [1] Push to GitHub (first time)
-echo [2] Start launcher (dev mode)
-echo [3] Build .msi installer
-echo [4] Open project folder
-echo [5] Open documentation
-echo [6] Read FIX_PUSH_PROBLEM.md
-echo [0] Exit
-echo.
-set /p choice="Enter number (0-6): "
+set /p choice="Choose option (1-6): "
 
-if "%choice%"=="1" goto setup
+if "%choice%"=="1" goto push
 if "%choice%"=="2" goto dev
 if "%choice%"=="3" goto build
-if "%choice%"=="4" goto folder
-if "%choice%"=="5" goto docs
-if "%choice%"=="6" goto fix
-if "%choice%"=="0" exit
+if "%choice%"=="4" goto sync
+if "%choice%"=="5" goto install
+if "%choice%"=="6" goto end
+goto menu
 
-echo Invalid choice!
-pause
-goto end
-
-:setup
-cls
-echo Starting Git initialization...
+:push
+echo.
+echo Pushing to GitHub...
 call push-to-github.bat
 goto end
 
 :dev
-cls
+echo.
 echo Starting launcher in dev mode...
 call start-dev.bat
 goto end
 
 :build
-cls
-echo Building .msi installer...
+echo.
+echo Building MSI installer...
 call build-launcher.bat
 goto end
 
-:folder
-explorer "%~dp0"
+:sync
+echo.
+echo Syncing changes...
+call sync-to-github.bat
 goto end
 
-:docs
-start INSTRUCTION.md
-goto end
-
-:fix
-start FIX_PUSH_PROBLEM.md
-goto end
+:install
+echo.
+echo Installing dependencies...
+cd launcher
+call npm install
+cd ..
+echo.
+echo Dependencies installed!
+pause
+goto menu
 
 :end
+echo.
+echo Done!
+pause

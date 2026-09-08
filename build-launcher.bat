@@ -1,35 +1,28 @@
 @echo off
 chcp 65001 >nul
-cls
+echo.
 echo ========================================
-echo  BUILD LAUNCHER (.msi)
+echo   BUILD MSI INSTALLER
 echo ========================================
 echo.
 
-cd /d "%~dp0\launcher"
+cd launcher
 
-echo [1/2] Installing dependencies...
+echo Installing dependencies...
 call npm install
-if errorlevel 1 (
-    echo ERROR: Failed to install dependencies
-    pause
-    exit /b 1
-)
 
-echo [2/2] Building .msi installer...
+echo.
+echo Building Windows installer...
 call npm run build:win
-if errorlevel 1 (
-    echo ERROR: Failed to build installer
-    pause
-    exit /b 1
-)
 
 echo.
 echo ========================================
-echo  SUCCESS! Installer created
+echo   BUILD COMPLETE!
 echo ========================================
 echo.
-echo File location: launcher\dist\
-echo.
-explorer dist
+echo Output files:
+dir dist\*.msi
+dir dist\*.exe
+
+cd ..
 pause
