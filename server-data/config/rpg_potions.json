@@ -1,0 +1,20 @@
+{
+  "smokeDuration": 200,
+  "smokeRadius": 5,
+  "smokeParticleDensity": 150,
+  "decoyHealth": 20.0,
+  "knockbackStrength": 3.0,
+  "knockbackVerticalMultiplier": 0.5,
+  "phantomArmorHits": 3,
+  "phantomArmorVulnerableDuration": 100,
+  "phantomArmorVulnerableMultiplier": 1.5,
+  "paralysisDuration": 100,
+  "paralysisSpeedMultiplier": 0.3,
+  "projectileReboundDuration": 300,
+  "projectileReboundFullDamage": true,
+  "heatMarkDuration": 300,
+  "heatMarkDamageMultiplier": 1.25,
+  "heatMarkGlowColor": 16711680,
+  "blackStainDuration": 150,
+  "blackStainIntensity": 5
+}
