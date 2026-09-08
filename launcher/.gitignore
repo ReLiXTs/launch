@@ -1,0 +1,23 @@
+node_modules/
+dist/
+out/
+build/
+*.exe
+*.msi
+*.dmg
+*.AppImage
+.DS_Store
+Thumbs.db
+*.log
+temp-update.zip
+version.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

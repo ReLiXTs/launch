@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>Камышечный Лаунчер</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="launcher">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <h1>🌾 Камышечный</h1>
+      </div>
+      <div class="header-info">
+        <span id="version-info">Версия: ...</span>
+        <span id="update-status" class="status-indicator">●</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Update Notification -->
+      <div id="update-notification" class="notification hidden">
+        <div class="notification-content">
+          <h3>🎉 Доступно обновление!</h3>
+          <p id="update-message">Новая версия доступна для загрузки</p>
+          <button id="update-btn" class="btn btn-primary">Обновить</button>
+          <button id="dismiss-update-btn" class="btn btn-secondary">Позже</button>
+        </div>
+      </div>
+
+      <!-- Download Progress -->
+      <div id="download-progress" class="progress-container hidden">
+        <div class="progress-info">
+          <span id="progress-status">Загрузка...</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Launch Settings -->
+      <div class="settings-panel">
+        <h2>Настройки запуска</h2>
+        
+        <div class="setting-group">
+          <label for="username">Никнейм:</label>
+          <input type="text" id="username" placeholder="Введите никнейм" value="Player">
+        </div>
+
+        <div class="setting-group">
+          <label for="version-select">Версия:</label>
+          <select id="version-select">
+            <option value="1.21.1">Fabric 1.21.1</option>
+            <option value="1.20.4">Fabric 1.20.4</option>
+          </select>
+        </div>
+
+        <div class="setting-group">
+          <label for="ram-slider">
+            Выделение ОЗУ: <span id="ram-value">4096</span> МБ
+            <span class="recommended-tag" id="recommended-ram"></span>
+          </label>
+          <div class="ram-slider-container">
+            <span>2 ГБ</span>
+            <input type="range" id="ram-slider" min="2048" max="16384" step="512" value="4096">
+            <span id="max-ram-label">8 ГБ</span>
+          </div>
+          <button id="auto-ram-btn" class="btn btn-small">Автонастройка</button>
+        </div>
+
+        <div class="setting-group">
+          <label for="modloader-select">Загрузчик модов:</label>
+          <select id="modloader-select">
+            <option value="fabric">Fabric</option>
+            <option value="forge">Forge</option>
+          </select>
+        </div>
+
+        <div class="setting-group system-info">
+          <h3>Системная информация</h3>
+          <div id="system-info">
+            <p>ОЗУ: <span id="total-ram">...</span> МБ (свободно: <span id="free-ram">...</span> МБ)</p>
+            <p>Процессор: <span id="cpu-count">...</span> ядер</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Launch Button -->
+      <div class="launch-section">
+        <button id="launch-btn" class="btn btn-launch">
+          🎮 Запустить Minecraft
+        </button>
+      </div>
+
+      <!-- Status Log -->
+      <div class="status-section">
+        <h3>Статус</h3>
+        <div id="status-log" class="status-log">
+          <p class="log-entry">Лаунчер запущен...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Камышечный Лаунчер v1.0.0 | Сервер: Камышечный</p>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

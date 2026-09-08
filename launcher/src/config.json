@@ -1,0 +1,24 @@
+{
+  "serverName": "Камышечный",
+  "github": {
+    "owner": "ReLiXTs",
+    "repo": "launch",
+    "branch": "main"
+  },
+  "minecraft": {
+    "defaultVersion": "1.21.1",
+    "defaultModLoader": "fabric",
+    "minRam": 2048,
+    "maxRam": 8192
+  },
+  "paths": {
+    "versions": "server-data/versions",
+    "mods": "server-data/mods",
+    "resourcepacks": "server-data/resourcepacks",
+    "config": "server-data/config",
+    "shaderpacks": "server-data/shaderpacks",
+    "saves": "server-data/saves",
+    "datapacks": "server-data/datapacks"
+  },
+  "updateCheckInterval": 300000
+}

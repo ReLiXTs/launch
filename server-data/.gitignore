@@ -1,0 +1,14 @@
+# Временные файлы
+*.tmp
+*.temp
+
+# Кэш
+cache/
+.cached/
+
+# Логи
+*.log
+
+# Системные файлы
+.DS_Store
+Thumbs.db
