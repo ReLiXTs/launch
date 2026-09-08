@@ -3,113 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' https://crafatar.com data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
   <title>Камышечный Лаунчер</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="launcher">
-    <!-- Header -->
-    <div class="header">
-      <div class="logo">
-        <h1>🌾 Камышечный</h1>
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-emoji">🌾</span>
+        <span class="brand-name">Камышечный</span>
       </div>
-      <div class="header-info">
-        <span id="version-info">Версия: ...</span>
-        <span id="update-status" class="status-indicator">●</span>
-      </div>
-    </div>
 
-    <!-- Main Content -->
-    <div class="content">
-      <!-- Update Notification -->
-      <div id="update-notification" class="notification hidden">
-        <div class="notification-content">
-          <h3>🎉 Доступно обновление!</h3>
-          <p id="update-message">Новая версия доступна для загрузки</p>
+      <nav class="nav">
+        <button class="nav-item active" data-tab="play">
+          <span class="nav-icon">🎮</span> Играть
+        </button>
+        <button class="nav-item" data-tab="settings">
+          <span class="nav-icon">⚙️</span> О лаунчере
+        </button>
+        <button class="nav-item" data-tab="log">
+          <span class="nav-icon">📜</span> Журнал
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span id="version-info">v1.0.0</span>
+        <span id="update-status" class="status-dot" title="Статус обновлений"></span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Account bar -->
+      <div class="account-bar">
+        <div class="account-info">
+          <img id="account-avatar" class="avatar hidden" alt="">
+          <div class="avatar-placeholder" id="avatar-placeholder">🙂</div>
+          <div class="account-text">
+            <strong id="account-name">Не выполнен вход</strong>
+            <span id="account-sub">Войдите через Microsoft, чтобы играть онлайн</span>
+          </div>
+        </div>
+
+        <button id="ms-login-btn" class="btn btn-microsoft">
+          <svg width="16" height="16" viewBox="0 0 23 23" aria-hidden="true">
+            <rect width="10" height="10" x="1" y="1" fill="#f35325"/>
+            <rect width="10" height="10" x="12" y="1" fill="#81bc06"/>
+            <rect width="10" height="10" x="1" y="12" fill="#05a6f0"/>
+            <rect width="10" height="10" x="12" y="12" fill="#ffba08"/>
+          </svg>
+          <span class="btn-label">Войти через Microsoft</span>
+        </button>
+        <button id="ms-logout-btn" class="btn btn-ghost hidden">Выйти</button>
+      </div>
+
+      <!-- Update banner -->
+      <div id="update-notification" class="banner hidden">
+        <div class="banner-text">
+          <strong>🎉 Доступно обновление</strong>
+          <p id="update-message"></p>
+        </div>
+        <div class="banner-actions">
           <button id="update-btn" class="btn btn-primary">Обновить</button>
-          <button id="dismiss-update-btn" class="btn btn-secondary">Позже</button>
+          <button id="dismiss-update-btn" class="btn btn-ghost">Позже</button>
         </div>
       </div>
 
-      <!-- Download Progress -->
-      <div id="download-progress" class="progress-container hidden">
+      <div id="download-progress" class="card progress-card hidden">
         <div class="progress-info">
           <span id="progress-status">Загрузка...</span>
           <span id="progress-percent">0%</span>
         </div>
-        <div class="progress-bar">
-          <div id="progress-fill" class="progress-fill"></div>
-        </div>
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
       </div>
 
-      <!-- Launch Settings -->
-      <div class="settings-panel">
-        <h2>Настройки запуска</h2>
-        
-        <div class="setting-group">
-          <label for="username">Никнейм:</label>
-          <input type="text" id="username" placeholder="Введите никнейм" value="Player">
-        </div>
+      <!-- Tab: Play -->
+      <section class="tab active" id="tab-play">
+        <div class="grid">
+          <div class="card">
+            <h2>Настройки запуска</h2>
 
-        <div class="setting-group">
-          <label for="version-select">Версия:</label>
-          <select id="version-select">
-            <option value="1.21.1">Fabric 1.21.1</option>
-            <option value="1.20.4">Fabric 1.20.4</option>
-          </select>
-        </div>
+            <div class="field">
+              <label for="username">Никнейм <span class="hint" id="username-hint">(офлайн-режим)</span></label>
+              <input type="text" id="username" placeholder="Введите никнейм" value="Player">
+            </div>
 
-        <div class="setting-group">
-          <label for="ram-slider">
-            Выделение ОЗУ: <span id="ram-value">4096</span> МБ
-            <span class="recommended-tag" id="recommended-ram"></span>
-          </label>
-          <div class="ram-slider-container">
-            <span>2 ГБ</span>
-            <input type="range" id="ram-slider" min="2048" max="16384" step="512" value="4096">
-            <span id="max-ram-label">8 ГБ</span>
+            <div class="field-row">
+              <div class="field">
+                <label for="version-select">Версия</label>
+                <select id="version-select">
+                  <option value="1.21.1">Fabric 1.21.1</option>
+                  <option value="1.20.4">Fabric 1.20.4</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="modloader-select">Загрузчик</label>
+                <select id="modloader-select">
+                  <option value="fabric">Fabric</option>
+                  <option value="forge">Forge</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="ram-slider">
+                Оперативная память: <span id="ram-value">4096</span> МБ
+                <span class="tag" id="recommended-ram"></span>
+              </label>
+              <div class="ram-row">
+                <span>2 ГБ</span>
+                <input type="range" id="ram-slider" min="2048" max="16384" step="512" value="4096">
+                <span id="max-ram-label">8 ГБ</span>
+              </div>
+              <button id="auto-ram-btn" class="btn btn-small">Автонастройка</button>
+            </div>
           </div>
-          <button id="auto-ram-btn" class="btn btn-small">Автонастройка</button>
-        </div>
 
-        <div class="setting-group">
-          <label for="modloader-select">Загрузчик модов:</label>
-          <select id="modloader-select">
-            <option value="fabric">Fabric</option>
-            <option value="forge">Forge</option>
-          </select>
-        </div>
-
-        <div class="setting-group system-info">
-          <h3>Системная информация</h3>
-          <div id="system-info">
-            <p>ОЗУ: <span id="total-ram">...</span> МБ (свободно: <span id="free-ram">...</span> МБ)</p>
-            <p>Процессор: <span id="cpu-count">...</span> ядер</p>
+          <div class="card">
+            <h2>Система</h2>
+            <ul class="stat-list">
+              <li><span>ОЗУ всего</span><strong id="total-ram">...</strong></li>
+              <li><span>ОЗУ свободно</span><strong id="free-ram">...</strong></li>
+              <li><span>Ядер CPU</span><strong id="cpu-count">...</strong></li>
+            </ul>
+            <h2 class="mt">Сервер</h2>
+            <p class="muted">Камышечный — автоматическая синхронизация модов, конфигов и ресурспаков при каждом запуске.</p>
           </div>
         </div>
-      </div>
 
-      <!-- Launch Button -->
-      <div class="launch-section">
-        <button id="launch-btn" class="btn btn-launch">
-          🎮 Запустить Minecraft
-        </button>
-      </div>
+        <button id="launch-btn" class="btn btn-launch">🎮 Запустить Minecraft</button>
+      </section>
 
-      <!-- Status Log -->
-      <div class="status-section">
-        <h3>Статус</h3>
-        <div id="status-log" class="status-log">
-          <p class="log-entry">Лаунчер запущен...</p>
+      <!-- Tab: Settings -->
+      <section class="tab" id="tab-settings">
+        <div class="card">
+          <h2>О лаунчере</h2>
+          <p><strong>Камышечный Лаунчер</strong> — версия <span id="about-version">1.0.0</span></p>
+          <p class="muted">Репозиторий обновлений: <code>github.com/ReLiXTs/launch</code></p>
+          <p class="muted">Вход через Microsoft использует официальные API Xbox Live и Minecraft Services.</p>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- Footer -->
-    <div class="footer">
-      <p>Камышечный Лаунчер v1.0.0 | Сервер: Камышечный</p>
-    </div>
+      <!-- Tab: Log -->
+      <section class="tab" id="tab-log">
+        <div class="card">
+          <h2>Журнал</h2>
+          <div id="status-log" class="status-log"></div>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script src="renderer.js"></script>

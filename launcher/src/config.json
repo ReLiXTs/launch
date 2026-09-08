@@ -20,5 +20,9 @@
     "saves": "server-data/saves",
     "datapacks": "server-data/datapacks"
   },
-  "updateCheckInterval": 300000
+  "updateCheckInterval": 300000,
+  "msal": {
+    "_comment": "Зарегистрируйте приложение в Azure Portal (тип: Personal Microsoft accounts only), включите разрешение XboxLive.signin, и укажите client ID сюда. Подробности в README.",
+    "clientId": "YOUR_AZURE_CLIENT_ID"
+  }
 }
