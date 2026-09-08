@@ -3,6 +3,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-brightgreen)
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![License](https://img.shields.io/badge/license-MIT-orange)
+![Build](https://img.shields.io/badge/build-GitHub%20Actions-blue)
 
 Полноценная система для запуска и управления Minecraft сервером "Камышечный" с автоматическими обновлениями через GitHub.
 
@@ -14,6 +15,7 @@
 ✅ **Поддержка загрузчиков** - Fabric и Forge
 ✅ **Современный UI** - Красивый и интуитивный интерфейс
 ✅ **MSI установщик** - Профессиональная установка для Windows
+✅ **GitHub Actions** - Автоматическая сборка .msi при каждом push
 ✅ **Логирование** - Подробные логи всех операций
 
 ## 🚀 Быстрый старт
@@ -28,9 +30,16 @@ cd C:\Users\Hoshino\Desktop\BRG
 .\setup-git.bat
 ```
 
-⚠️ **ВАЖНО:** После выполнения отзовите токен в настройках GitHub!
+⚠️ **ВАЖНО:** При первом push будет запрошен логин и токен! Используйте Git Credential Manager.
 
-### Шаг 2: Запустить лаунчер
+### Шаг 2: Дождаться сборки GitHub Actions
+
+После push на GitHub автоматически запустится сборка .msi установщика:
+1. Откройте: https://github.com/ReLiXTs/launch/actions
+2. Дождитесь завершения сборки (зелёная галочка)
+3. Скачайте готовый .msi из Artifacts
+
+### Шаг 3: Запустить лаунчер (разработка)
 
 **Запустите:** `START.bat` → Выберите опцию **2**
 
@@ -39,16 +48,6 @@ cd C:\Users\Hoshino\Desktop\BRG
 cd launcher
 npm install
 npm start
-```
-
-### Шаг 3: Собрать установщик
-
-**Запустите:** `START.bat` → Выберите опцию **3**
-
-Или вручную:
-```bash
-cd launcher
-npm run build:win
 ```
 
 ## 📁 Структура проекта
@@ -78,12 +77,14 @@ BRG/
 │   ├── datapacks/              # Датапаки
 │   └── README.md               # Документация контента
 │
+├── .github/workflows/          # GitHub Actions
+│   └── build.yml               # Автоматическая сборка MSI
+│
 ├── START.bat                   # 🎯 Меню быстрого старта
 ├── setup-git.bat               # Инициализация Git и push
 ├── start-dev.bat               # Запуск в режиме разработки
 ├── build-launcher.bat          # Сборка .msi установщика
 ├── sync-to-github.bat          # Синхронизация изменений
-├── INSTRUCTION.md              # Подробная инструкция
 └── README.md                   # Этот файл
 ```
 
@@ -91,11 +92,12 @@ BRG/
 
 ### Для игроков
 
-1. **Установите** лаунчер из `launcher\dist\`
-2. **Запустите** лаунчер
-3. **Введите** никнейм
-4. **Настройте** ОЗУ (или используйте автонастройку)
-5. **Нажмите** "Запустить Minecraft"
+1. **Скачайте** установщик из GitHub Actions → Artifacts
+2. **Запустите** установщик
+3. **Запустите** лаунчер
+4. **Введите** никнейм
+5. **Настройте** ОЗУ (или используйте автонастройку)
+6. **Нажмите** "Запустить Minecraft"
 
 ### Для администратора
 
@@ -112,7 +114,8 @@ server-data\mods\
 cd C:\Users\Hoshino\Desktop\BRG
 .\sync-to-github.bat
 
-# 3. Готово! Лаунчер автоматически обновится
+# 3. Готово! GitHub Actions соберёт новый установщик
+# 4. Лаунчер у пользователей автоматически обновится
 ```
 
 #### Добавление новой версии Minecraft
@@ -126,6 +129,9 @@ server-data\versions\
 # 2. Добавьте конфиги в server-data\config\
 # 3. Синхронизируйте
 .\sync-to-github.bat
+
+# 4. Дождитесь сборки нового установщика
+# 5. Опубликуйте ссылку игрокам
 ```
 
 ## 🔧 Технические детали
@@ -155,6 +161,20 @@ max = 8192 MB  // 8 ГБ
 3. **Уведомление** - Пользователь видит уведомление об обновлении
 4. **Загрузка** - Скачивается архив с изменениями
 5. **Синхронизация** - Файлы из `server-data\` копируются в `.minecraft`
+
+### GitHub Actions
+
+При каждом push в main ветку автоматически:
+1. Устанавливаются зависимости Node.js
+2. Собирается .msi установщик
+3. Создаётся .exe установщик
+4. Артефакты загружаются в Artifacts
+5. (При создании тега) Создаётся GitHub Release
+
+**Мониторинг сборки:**
+```
+https://github.com/ReLiXTs/launch/actions
+```
 
 ### Оптимизация JVM
 
@@ -199,6 +219,16 @@ npm install
 npm start -- --dev
 ```
 
+### Сборка локально (без GitHub Actions)
+
+```bash
+cd launcher
+npm install
+npm run build:win
+```
+
+Установщик будет в `launcher\dist\`
+
 ### Сборка для разных платформ
 
 ```bash
@@ -212,15 +242,35 @@ npm run build:linux
 npm run build:mac
 ```
 
-## 🔐 Безопасность
+## 🐛 Решение проблем
 
-⚠️ **НИКОГДА** не коммитьте токены в репозиторий!
+### BAT файлы показывают непонятные символы
 
-Используйте переменные окружения:
-```bash
-# .env файл (добавить в .gitignore)
-GITHUB_TOKEN=your_token_here
-```
+**Решение:** Все BAT файлы используют `chcp 65001` для UTF-8. Если проблема сохраняется:
+1. Откройте CMD от имени администратора
+2. Выполните: `chcp 65001`
+3. Запустите BAT файл снова
+
+### Git push не работает
+
+**Решение:**
+1. Убедитесь что установлен Git: `git --version`
+2. Войдите через Git Credential Manager
+3. Или используйте GitHub CLI: `gh auth login`
+
+### GitHub Actions падает
+
+**Проверьте:**
+1. Actions лог: https://github.com/ReLiXTs/launch/actions
+2. Убедитесь что Node.js 20 установлен
+3. Проверьте package.json на наличие ошибок
+
+### Лаунчер не запускается
+
+**Решение:**
+1. Убедитесь что установлены зависимости: `npm install`
+2. Проверьте наличие Java 17+
+3. Проверьте логи в консоли (F12)
 
 ## 📊 Производительность
 
@@ -228,12 +278,7 @@ GITHUB_TOKEN=your_token_here
 - **Загрузка обновления:** Зависит от размера и скорости интернета
 - **Синхронизация файлов:** < 5 секунд для 1000 файлов
 - **Запуск Minecraft:** ~2-3 секунды
-
-## 🐛 Известные проблемы
-
-- [ ] Поддержка Linux/macOS для автоопределения Java
-- [ ] Git LFS для больших файлов
-- [ ] Мультиязычность интерфейса
+- **Сборка GitHub Actions:** ~3-5 минут
 
 ## 📝 Changelog
 
@@ -244,6 +289,7 @@ GITHUB_TOKEN=your_token_here
 - ✅ Автоматическая настройка ОЗУ
 - ✅ Поддержка Fabric и Forge
 - ✅ Создание .msi установщика
+- ✅ GitHub Actions для автоматической сборки
 
 ## 🤝 Вклад
 
@@ -251,19 +297,11 @@ GITHUB_TOKEN=your_token_here
 
 ## 📄 Лицензия
 
-MIT License - см. [LICENSE](LICENSE)
+MIT License
 
 ## 👨‍💻 Автор
 
 **ReLiXTs** - [GitHub](https://github.com/ReLiXTs)
-
-## 🙏 Благодарности
-
-- Minecraft - Mojang Studios
-- Electron - GitHub
-- Fabric - FabricMC
-- Forge - MinecraftForge
-- Aikar's Flags - Aikar
 
 ---
 

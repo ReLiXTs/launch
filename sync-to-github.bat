@@ -1,28 +1,30 @@
 @echo off
+chcp 65001 >nul
+cls
 echo ========================================
-echo  Синхронизация изменений с GitHub
+echo  SYNC TO GITHUB
 echo ========================================
 echo.
 
 cd /d "%~dp0"
 
-echo Проверка статуса Git...
+echo Checking Git status...
 git status
 
 echo.
-echo [1/3] Добавление изменений...
+echo [1/3] Adding changes...
 git add .
 
-echo [2/3] Создание коммита...
-set /p message="Введите сообщение коммита (или Enter для автоматического): "
-if "%message%"=="" set message="Обновление контента %date% %time%"
+echo [2/3] Creating commit...
+set /p message="Enter commit message (or Enter for auto): "
+if "%message%"=="" set message="Update content %date% %time%"
 git commit -m "%message%"
 
-echo [3/3] Push на GitHub...
+echo [3/3] Pushing to GitHub...
 git push origin main
 
 echo.
 echo ========================================
-echo  Синхронизация завершена!
+echo  Sync complete!
 echo ========================================
 pause

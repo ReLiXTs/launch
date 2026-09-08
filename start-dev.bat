@@ -1,20 +1,18 @@
 @echo off
+chcp 65001 >nul
+cls
 echo ========================================
-echo  Запуск лаунчера в режиме разработки
+echo  STARTING LAUNCHER (DEV MODE)
 echo ========================================
 echo.
 
 cd /d "%~dp0\launcher"
 
-echo [1/2] Установка зависимостей...
+echo Installing dependencies...
 call npm install
-if errorlevel 1 (
-    echo ОШИБКА: Не удалось установить зависимости
-    pause
-    exit /b 1
-)
 
-echo [2/2] Запуск лаунчера...
+echo.
+echo Starting launcher...
 call npm start -- --dev
 
 pause

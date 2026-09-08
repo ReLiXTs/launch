@@ -1,4 +1,4 @@
-# Dependencies
+# Node modules
 node_modules/
 
 # Build outputs
@@ -10,21 +10,15 @@ dist/
 .idea/
 .vscode/
 *.swp
-*.swo
 
 # OS
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Logs
-*.log
-npm-debug.log*
-
-# Environment
-.env
-.env.local
-
-# Temp files
+# Temp
 temp-*.zip
 *.tmp
+
+# Version tracking
+launcher/version.json

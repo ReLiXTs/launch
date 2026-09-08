@@ -1,4 +1,6 @@
 @echo off
+chcp 65001 >nul
+cls
 echo ========================================
 echo  Инициализация Git и Push на GitHub
 echo ========================================
@@ -31,13 +33,20 @@ if errorlevel 1 (
 
 echo [5/5] Настройка remote и push на GitHub...
 git remote remove origin 2>nul
-git remote add origin https://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@github.com/ReLiXTs/launch.git
+git remote add origin https://github.com/ReLiXTs/launch.git
 
+echo.
+echo ВАЖНО: При первом push будет запрошен логин и токен!
+echo.
 echo Push в main ветку...
 git branch -M main
 git push -u origin main --force
 if errorlevel 1 (
+    echo.
     echo ОШИБКА: Не удалось выполнить push на GitHub
+    echo Убедитесь что у вас установлен Git Credential Manager
+    echo Или используйте GitHub CLI: gh auth login
+    echo.
     pause
     exit /b 1
 )
@@ -46,8 +55,5 @@ echo.
 echo ========================================
 echo  УСПЕХ! Проект загружен на GitHub
 echo ========================================
-echo.
-echo ВАЖНО: Отозвите токен в настройках GitHub!
-echo Settings -^> Developer settings -^> Personal access tokens
 echo.
 pause
